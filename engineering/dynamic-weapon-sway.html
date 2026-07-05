@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Weapon Sway - Grant Petri</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704" />
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="eng-page-hero">
+    <div class="container">
+      <div class="kicker">Engineering Case Study</div>
+      <h1>Dynamic Weapon Sway</h1>
+      <p class="page-summary">A procedural first-person weapon motion system driven by spring simulation instead of hand-authored animation clips.</p>
+      <span class="eng-status-chip">Language: Lua | Runtime: Roblox | System: Procedural Animation</span>
+    </div>
+  </header>
+
+  <section class="container eng-layout">
+    <article class="eng-content">
+      <section id="overview" class="eng-section">
+        <h2>Overview</h2>
+        <p>
+          This system computes weapon sway every frame from camera movement and character velocity. The output is physically plausible motion that scales naturally with player input, while exposing tuning knobs for gameplay feel.
+        </p>
+      </section>
+
+      <section id="problem" class="eng-section">
+        <h2>Problem</h2>
+        <p>
+          Animation-only weapon sway produced repetition and required clip authoring for each weapon variant. I needed a unified runtime approach that could support many weapons without multiplying animation maintenance cost.
+        </p>
+      </section>
+
+      <section id="goals" class="eng-section">
+        <h2>Design Goals</h2>
+        <ul>
+          <li>Responsive feel tied directly to camera and movement deltas.</li>
+          <li>Low per-weapon setup cost through parameterized configuration.</li>
+          <li>Stable behavior at high and low frame rates.</li>
+          <li>Minimal visual jitter while preserving readable motion.</li>
+        </ul>
+      </section>
+
+      <section id="architecture" class="eng-section">
+        <h2>Architecture</h2>
+        <div class="eng-diagram" aria-label="Dynamic weapon sway architecture">
+          <div class="eng-node">Input Sampling: Camera Delta + Velocity</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Target Sway Computation</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Spring Integrator Update</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Transform Blend and Clamp</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Apply To Weapon Viewmodel</div>
+        </div>
+      </section>
+
+      <section id="implementation" class="eng-section">
+        <h2>Implementation</h2>
+        <p>
+          The update loop computes a target offset from recent camera rotation and movement, then pushes that target through damped springs for rotational and positional channels. Final offsets are clamped and blended before being applied to the viewmodel transform.
+        </p>
+        <div class="eng-callout">
+          <p>Core implementation choice: use springs as the single source of temporal smoothing rather than stacking ad-hoc lerps.</p>
+        </div>
+      </section>
+
+      <section id="challenges" class="eng-section">
+        <h2>Engineering Challenges</h2>
+        <div class="eng-notes">
+          <details open>
+            <summary>Frame-rate consistency</summary>
+            <p>Spring integration was tuned around delta time to avoid changing weapon feel across different hardware.</p>
+          </details>
+          <details>
+            <summary>Input noise and jitter</summary>
+            <p>Raw camera deltas can spike. I normalized and bounded signal ranges before feeding the springs.</p>
+          </details>
+          <details>
+            <summary>Per-weapon tuning burden</summary>
+            <p>I created grouped presets so weapons inherit baseline feel and only override where necessary.</p>
+          </details>
+        </div>
+      </section>
+
+      <section id="code" class="eng-section">
+        <h2>Code Examples</h2>
+
+        <article class="eng-code-card">
+          <h3>Target Sway Derivation</h3>
+<pre class="eng-code"><code class="language-lua">local camDelta = currentCameraCFrame:ToObjectSpace(lastCameraCFrame)
+local rx, ry, _ = camDelta:ToOrientation()
+
+local targetRot = Vector3.new(-rx, -ry, 0) * swayConfig.rotationScale
+local targetPos = humanoidRoot.AssemblyLinearVelocity * swayConfig.positionScale
+
+rotationSpring:Shove(targetRot)
+positionSpring:Shove(targetPos)</code></pre>
+        </article>
+
+        <article class="eng-code-card">
+          <h3>Spring Output Application</h3>
+<pre class="eng-code"><code class="language-lua">local rot = rotationSpring:Update(dt)
+local pos = positionSpring:Update(dt)
+
+rot = Vector3.new(
+    math.clamp(rot.X, -maxRot, maxRot),
+    math.clamp(rot.Y, -maxRot, maxRot),
+    0
+)
+
+local swayCF = CFrame.new(pos) * CFrame.Angles(rot.X, rot.Y, rot.Z)
+viewmodel:SetPrimaryPartCFrame(camera.CFrame * swayCF)</code></pre>
+        </article>
+      </section>
+
+      <section id="tradeoffs" class="eng-section">
+        <h2>Tradeoffs</h2>
+        <ul>
+          <li>Procedural sway is adaptive and cheap to scale, but requires careful parameter tuning to avoid floaty behavior.</li>
+          <li>Animation pipelines give direct artistic control, but increase maintenance as weapon count grows.</li>
+          <li>Spring-heavy systems reduce clip dependency, but demand disciplined constraints and clamping.</li>
+        </ul>
+      </section>
+
+      <section id="future" class="eng-section">
+        <h2>Future Improvements</h2>
+        <ul>
+          <li>Add context-aware sway profiles for sprinting, aiming, and low-stamina states.</li>
+          <li>Expose tuning sliders through in-game debug UI for rapid balancing.</li>
+          <li>Blend recoil and sway into a shared impulse framework.</li>
+        </ul>
+      </section>
+
+      <section id="proud" class="eng-section">
+        <h2>Why I Am Proud Of It</h2>
+        <p>
+          This system improved feel immediately while removing repetitive animation setup work. It became a reusable building block instead of a one-off effect.
+        </p>
+      </section>
+
+      <section id="lessons" class="eng-section">
+        <h2>Lessons Learned</h2>
+        <ul>
+          <li>Motion quality comes from stable signal processing before stylization.</li>
+          <li>Reusable tuning surfaces matter as much as the underlying math.</li>
+          <li>Procedural animation can be production-friendly when constraints are explicit.</li>
+        </ul>
+      </section>
+
+      <section id="related-project" class="eng-section">
+        <h2>Related Project</h2>
+        <div class="eng-link-grid">
+          <article class="eng-link-card">
+            <h4>Data Hunters</h4>
+            <p>This sway system is used in first-person combat for weapon readability and feedback.</p>
+            <a href="../projects/data-hunters.html">Open Project Page</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="related-engineering" class="eng-section">
+        <h2>Related Engineering</h2>
+        <div class="eng-link-grid">
+          <article class="eng-link-card">
+            <h4>Modular Weapon Framework</h4>
+            <p>Configuration architecture that hosts this sway module.</p>
+            <a href="modular-weapon-framework.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Projectile Simulation</h4>
+            <p>Downstream combat subsystem that combines with weapon feel systems.</p>
+            <a href="projectile-simulation.html">Open Engineering Page</a>
+          </article>
+        </div>
+      </section>
+    </article>
+
+    <aside class="eng-side">
+      <div class="eng-side-panel">
+        <h3>On This Page</h3>
+        <div class="eng-links">
+          <a href="#overview">Overview</a>
+          <a href="#problem">Problem</a>
+          <a href="#goals">Design Goals</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#implementation">Implementation</a>
+          <a href="#challenges">Engineering Challenges</a>
+          <a href="#code">Code Examples</a>
+          <a href="#tradeoffs">Tradeoffs</a>
+          <a href="#future">Future Improvements</a>
+          <a href="#proud">Why I Am Proud Of It</a>
+          <a href="#lessons">Lessons Learned</a>
+          <a href="#related-project">Related Project</a>
+          <a href="#related-engineering">Related Engineering</a>
+        </div>
+      </div>
+      <div class="eng-side-panel">
+        <h3>Technologies</h3>
+        <div class="eng-tag-list">
+          <span>Lua</span>
+          <span>Roblox</span>
+          <span>Springs</span>
+          <span>Procedural Animation</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">(c) Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

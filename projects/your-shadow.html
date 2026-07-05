@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Your Shadow - Grant Petri</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="index.html">Projects</a></li>
+        <li><a href="../engineering/index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+        <a href="https://r-ay.itch.io/" aria-label="itch.io" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/itch.svg" alt="itch.io"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="eng-page-hero">
+    <div class="container">
+      <div class="kicker">Published Project</div>
+      <h1>Your Shadow</h1>
+      <p class="page-summary">
+        Solo horror prototype shipped in roughly two weeks. The project combines procedural map generation, navigation pressure, and stalking AI behavior where enemies advance primarily when the player is not looking.
+      </p>
+      <span class="eng-status-chip">Status: Published | Team Size: Solo | Timeline: 2 Weeks</span>
+      <div class="project-ctas">
+        <a class="btn btn-primary" href="https://r-ay.itch.io/your-shadow" target="_blank" rel="noopener noreferrer">Play on itch.io</a>
+      </div>
+      <div class="project-hero-wrap">
+        <img class="project-hero-image" src="../images/hero/your-shadow.png" alt="Your Shadow gameplay hero image">
+      </div>
+    </div>
+  </header>
+
+  <section class="container eng-layout">
+    <article class="eng-content">
+      <section class="eng-section">
+        <h2>Overview</h2>
+        <p>
+          Your Shadow was designed as a compact horror experiment where uncertainty and pursuit behavior do most of the emotional work. Each run starts with a new map layout and enemy approach vectors, keeping memorization from flattening tension.
+        </p>
+      </section>
+
+      <section class="eng-section">
+        <h2>Core Systems</h2>
+        <div class="eng-card-grid">
+          <article class="eng-card"><h3>Random Map Generation</h3><p>Room and corridor permutations produce unfamiliar pathing each run.</p></article>
+          <article class="eng-card"><h3>Enemy Navigation</h3><p>Enemies route through generated spaces with fallback behavior in tight geometry.</p></article>
+          <article class="eng-card"><h3>Stalking Logic</h3><p>Enemies close distance when the player camera is not focused on them.</p></article>
+          <article class="eng-card"><h3>Pacing Controls</h3><p>Spawn and approach timing tuned to sustain pressure without exhausting players.</p></article>
+        </div>
+      </section>
+
+      <section class="eng-section">
+        <h2>Stalking Behavior Model</h2>
+        <div class="eng-diagram" aria-label="Your Shadow stalking model">
+          <div class="eng-node">Enemy Evaluates Player Visibility</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Player Looking At Enemy?</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Yes -> Hold or Slow</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">No -> Advance Along Navigation Path</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Recheck Visibility</div>
+        </div>
+        <div class="eng-callout">
+          <p>The key tension mechanism is not jump-scares. It is visibility-gated movement that manipulates trust in the player camera.</p>
+        </div>
+      </section>
+
+      <section class="eng-section">
+        <h2>What I Learned From Shipping Fast</h2>
+        <ul>
+          <li>Strong behavior rules can outperform heavy content volume in horror prototypes.</li>
+          <li>Simple procedural generation pays off immediately for replay value.</li>
+          <li>When scope is tight, system clarity matters more than visual complexity.</li>
+        </ul>
+      </section>
+
+      <section class="eng-section">
+        <h2>Engineering Highlights</h2>
+        <div class="eng-link-grid">
+          <article class="eng-link-card">
+            <h4>Procedural Map Generation</h4>
+            <p>Generation constraints and path quality principles used in this project.</p>
+            <a href="../engineering/procedural-map-generation.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Smart AI Group Pathfinding</h4>
+            <p>Navigation and behavior steering techniques that informed enemy movement.</p>
+            <a href="../engineering/smart-ai-group-pathfinding.html">Open Engineering Page</a>
+          </article>
+        </div>
+      </section>
+    </article>
+
+    <aside class="eng-side">
+      <div class="eng-side-panel">
+        <h3>Project Snapshot</h3>
+        <div class="eng-tag-list">
+          <span>Published</span>
+          <span>Solo Build</span>
+          <span>Procedural Horror</span>
+          <span>AI Stalking</span>
+          <span>Rapid Delivery</span>
+        </div>
+      </div>
+      <div class="eng-side-panel">
+        <h3>Explore Next</h3>
+        <div class="eng-links">
+          <a href="site-23.html">Site 23</a>
+          <a href="../engineering/index.html">Engineering Hub</a>
+          <a href="../contact.html">Contact</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">(c) Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

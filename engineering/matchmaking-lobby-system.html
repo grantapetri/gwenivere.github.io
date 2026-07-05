@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Matchmaking & Lobby System — Engineering</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="kicker">Engineering Case Study</div>
+        <h1>Matchmaking & Lobby System</h1>
+        <p class="page-summary">A multiplayer session flow that handles loadouts, queueing, match starts, and clean transitions from prep space to active gameplay.</p>
+      </div>
+      <aside class="hero-panel">
+        <h3>Core Focus</h3>
+        <div class="tag-list"><span>Match Flow</span><span>Queueing</span><span>Player Readiness</span></div>
+      </aside>
+    </div>
+  </header>
+
+  <section class="container case-study-grid">
+    <div class="case-study-stack">
+      <section class="case-study-section">
+        <h2>1. Overview</h2>
+        <p>The matchmaking and lobby system organizes the player journey before the match even begins. It gives players a place to manage loadouts, enter queues, wait for sessions to form, and transition into the game without confusion or broken state.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>2. Design Goals</h2>
+        <ul>
+          <li>Create a reliable flow from lobby to active match.</li>
+          <li>Keep queue and readiness state easy to reason about.</li>
+          <li>Support future scaling for larger session rules or party systems.</li>
+        </ul>
+      </section>
+      <section class="case-study-section">
+        <h2>3. Architecture</h2>
+        <p>The system separates pre-match player state from live match state. Queue management, loadout choices, and teleport or spawn transitions are handled as explicit phases, which makes it easier to recover from cancellations, disconnects, or partial fills.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>4. Implementation</h2>
+        <p>Players enter the lobby, configure equipment, and signal intent to queue. Once the server decides the session is ready, players are moved into the active match and the game timer starts. By structuring each step as a known phase, it becomes easier to lock or unlock actions based on where the player is in the flow.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>5. Challenges & Solutions</h2>
+        <p>Match flow systems can break down when players disconnect, cancel, or change state at awkward times. I approached that by giving the server clear ownership over readiness and queue transitions, which prevents clients from drifting into invalid session states.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>6. Results / Lessons Learned</h2>
+        <p>The result was a cleaner onboarding flow for matches and a better foundation for multiplayer scaling. The key lesson was that session UX depends heavily on state clarity, not just on the teleport or spawn logic itself.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Project</h2>
+        <div class="topic-links">
+          <a href="../projects/data-hunters.html">Data Hunters</a>
+        </div>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Engineering</h2>
+        <div class="topic-links">
+          <a href="persistent-player-data.html">Persistent Player Data</a>
+          <a href="functional-gameplay-architecture.html">Functional Gameplay Architecture</a>
+        </div>
+      </section>
+    </div>
+    <aside class="case-study-sidebar">
+      <div class="sidebar-panel">
+        <h3>Technologies</h3>
+        <div class="tag-list"><span>Lua</span><span>State Machines</span><span>Session Management</span><span>Multiplayer UX</span></div>
+      </div>
+      <div class="sidebar-panel">
+        <h3>Related Topics</h3>
+        <div class="topic-links">
+          <a href="server-authoritative-hit-validation.html">Server-Authoritative Hit Validation</a>
+          <a href="persistent-player-data.html">Persistent Player Data</a>
+          <a href="functional-gameplay-architecture.html">Functional Gameplay Architecture</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

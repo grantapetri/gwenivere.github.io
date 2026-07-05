@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Projectile Simulation — Engineering</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="kicker">Engineering Case Study</div>
+        <h1>Projectile Simulation</h1>
+        <p class="page-summary">A ballistic projectile system that supports gravity, raycast stepping, and penetrable materials for more believable firefights than simple hitscan alone.</p>
+      </div>
+      <aside class="hero-panel">
+        <h3>Core Focus</h3>
+        <div class="tag-list"><span>Ballistics</span><span>Raycasts</span><span>Penetration</span><span>Deterministic Updates</span></div>
+      </aside>
+    </div>
+  </header>
+
+  <section class="container case-study-grid">
+    <div class="case-study-stack">
+      <section class="case-study-section">
+        <h2>1. Overview</h2>
+        <p>Projectile Simulation was built to support travel time, bullet drop, and material interaction. That gave gunfights more depth and made different weapons feel distinct in a way hitscan alone could not provide.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>2. Design Goals</h2>
+        <ul>
+          <li>Support responsive ballistic behavior while remaining practical for multiplayer.</li>
+          <li>Allow materials like glass or thin wood to be partially penetrable.</li>
+          <li>Keep the logic reusable across multiple firearm classes.</li>
+        </ul>
+      </section>
+      <section class="case-study-section">
+        <h2>3. Architecture</h2>
+        <p>Projectiles track horizontal motion, vertical velocity, lifetime, and direction. Every simulation step computes the next position and raycasts between current and target points to catch collisions even at high speed. Material rules determine whether the projectile stops or continues with reduced energy.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>4. Implementation</h2>
+        <p>The system updates projectile state incrementally instead of teleporting directly to end points. Gravity affects vertical velocity each frame, and recursive handling allows a projectile to continue after penetration when valid. The implementation keeps trajectory logic self-contained, which made it easier to debug and visualize.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>5. Challenges & Solutions</h2>
+        <p>The hard part was balancing realism against clarity and performance. I kept the simulation lightweight by using a clean stepped update model and only layering complexity where it materially improved gameplay, such as penetration or visible drop over distance.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>6. Results / Lessons Learned</h2>
+        <p>The result was a more expressive firing model that supported both weapon identity and encounter design. The biggest lesson was that simulation depth is worth it when it creates readable decisions for the player, not just technical novelty.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Project</h2>
+        <div class="topic-links">
+          <a href="../projects/data-hunters.html">Data Hunters</a>
+        </div>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Engineering</h2>
+        <div class="topic-links">
+          <a href="dynamic-weapon-sway.html">Dynamic Weapon Sway</a>
+          <a href="server-authoritative-hit-validation.html">Server-Authoritative Hit Validation</a>
+        </div>
+      </section>
+    </div>
+    <aside class="case-study-sidebar">
+      <div class="sidebar-panel">
+        <h3>Technologies</h3>
+        <div class="tag-list"><span>Lua</span><span>Physics</span><span>Raycasting</span><span>Gameplay Debugging</span></div>
+      </div>
+      <div class="sidebar-panel">
+        <h3>Related Topics</h3>
+        <div class="topic-links">
+          <a href="dynamic-weapon-sway.html">Dynamic Weapon Sway</a>
+          <a href="server-authoritative-hit-validation.html">Server-Authoritative Hit Validation</a>
+          <a href="modular-weapon-framework.html">Modular Weapon Framework</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

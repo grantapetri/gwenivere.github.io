@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sandbox Placement System — Engineering</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="kicker">Engineering Case Study</div>
+        <h1>Sandbox Placement System</h1>
+        <p class="page-summary">A placement workflow that gives players clear previews, robust validation, and reliable snapping for buildable sandbox interactions.</p>
+      </div>
+      <aside class="hero-panel">
+        <h3>Core Focus</h3>
+        <div class="tag-list"><span>Player Tools</span><span>Grid Snapping</span><span>Validation</span><span>UX Feedback</span></div>
+      </aside>
+    </div>
+  </header>
+
+  <section class="container case-study-grid">
+    <div class="case-study-stack">
+      <section class="case-study-section">
+        <h2>1. Overview</h2>
+        <p>The sandbox placement system is designed to make player construction feel predictable and satisfying. It focuses on translating player intent into clean object placement while preventing invalid builds and reducing frustrating misalignment.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>2. Design Goals</h2>
+        <ul>
+          <li>Give players immediate visual feedback before placing an object.</li>
+          <li>Support snapping and validation rules that keep the world readable.</li>
+          <li>Make the system flexible enough for different object types and placement restrictions.</li>
+        </ul>
+      </section>
+      <section class="case-study-section">
+        <h2>3. Architecture</h2>
+        <p>The placement workflow separates preview logic, local input handling, and authoritative validation. Clients are free to visualize candidate placement quickly, while the server remains responsible for final approval and world-state changes.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>4. Implementation</h2>
+        <p>A ghost preview object updates continuously based on cursor position, snapping rules, and surface detection. Placement checks evaluate collisions, allowed surfaces, ownership rules, and spacing constraints. This makes the system feel responsive while still enforcing build rules consistently.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>5. Challenges & Solutions</h2>
+        <p>The hardest part was aligning player expectation with actual allowed placement. I addressed that by making validation visible in the preview step, so the player can understand why a location is valid or invalid before committing.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>6. Results / Lessons Learned</h2>
+        <p>The result was a placement flow that feels more intentional and less error-prone. The lesson was that build systems live or die on feedback quality; technical validation only helps if the player can read it clearly.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Project</h2>
+        <div class="topic-links">
+          <a href="../projects/site-23.html">Site 23</a>
+        </div>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Engineering</h2>
+        <div class="topic-links">
+          <a href="functional-gameplay-architecture.html">Functional Gameplay Architecture</a>
+          <a href="procedural-map-generation.html">Procedural Map Generation</a>
+        </div>
+      </section>
+    </div>
+    <aside class="case-study-sidebar">
+      <div class="sidebar-panel">
+        <h3>Technologies</h3>
+        <div class="tag-list"><span>Lua</span><span>Raycasts</span><span>Client/Server Validation</span><span>Tool UX</span></div>
+      </div>
+      <div class="sidebar-panel">
+        <h3>Related Topics</h3>
+        <div class="topic-links">
+          <a href="functional-gameplay-architecture.html">Functional Gameplay Architecture</a>
+          <a href="persistent-player-data.html">Persistent Player Data</a>
+          <a href="smart-ai-group-pathfinding.html">Smart AI Group Pathfinding</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

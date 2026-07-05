@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Site 23 - Grant Petri</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="index.html">Projects</a></li>
+        <li><a href="../engineering/index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="eng-page-hero">
+    <div class="container">
+      <div class="kicker">Flagship Project</div>
+      <h1>Site 23</h1>
+      <p class="page-summary">
+        Procedural horror built around a custom room-based generation framework. The project is less about random placement and more about solving constraints while preserving pacing and replayability.
+      </p>
+      <span class="eng-status-chip">Status: In Development | Engine: Unity | Genre: Procedural Horror</span>
+      <div class="project-hero-wrap">
+        <img class="project-hero-image" src="../images/hero/site-23.png" alt="Site 23 gameplay hero image">
+      </div>
+    </div>
+  </header>
+
+  <section class="container eng-layout">
+    <article class="eng-content">
+      <section class="eng-section">
+        <h2>Overview</h2>
+        <p>
+          Site 23 is built as a procedural generation framework first and a game second. The generation begins from a start room and expands through doorway constraints. Every doorway becomes an expansion point, and each room placement must satisfy transform alignment and collision constraints before it can be accepted.
+        </p>
+        <p>
+          The practical goal is to produce maps that feel authored. Randomness decides options, but constraints decide what is legal. That separation has been the most important architectural decision in this project.
+        </p>
+      </section>
+
+      <section class="eng-section">
+        <h2>Generation Pipeline</h2>
+        <div class="eng-diagram" aria-label="Site 23 generation pipeline">
+          <div class="eng-node">Start Room</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Collect Exposed Doorways</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Select Doorway + Shuffle Blueprints</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Find Compatible Door + Solve Transform</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Collision Validation</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Place Room + Queue New Doors</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Depth Reached -> Seal Dead Ends</div>
+        </div>
+
+        <div class="eng-process">
+          <div class="eng-step">
+            <h4>Step 1</h4>
+            <p>Select a doorway from the queue and shuffle candidate room blueprints.</p>
+          </div>
+          <div class="eng-step">
+            <h4>Step 2</h4>
+            <p>Match compatible door metadata and solve rotation + translation so doors align and face opposite directions.</p>
+          </div>
+          <div class="eng-step">
+            <h4>Step 3</h4>
+            <p>Reject overlaps against existing geometry. Accept only legal placements and append exposed doors to the queue.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="eng-section">
+        <h2>Two Generation Phases</h2>
+        <div class="eng-card-grid">
+          <article class="eng-card">
+            <h3>Root Generation</h3>
+            <p>Builds a guaranteed critical path so progression can always complete. This phase prioritizes structural reliability over variation.</p>
+          </article>
+          <article class="eng-card">
+            <h3>Expansion Generation</h3>
+            <p>Branches outward from the critical path to create optional routes, side spaces, and replayability without breaking progression.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="eng-section">
+        <h2>Engineering Challenges</h2>
+        <div class="eng-notes">
+          <details open>
+            <summary>Transform Alignment for Arbitrary Rooms</summary>
+            <p>Door alignment became a rigid transform problem: room prefabs arrive in arbitrary orientation, so I solve a transform that rotates and translates the candidate room until the chosen door pair is co-located and facing opposite normals.</p>
+          </details>
+          <details>
+            <summary>Collision Validation at Scale</summary>
+            <p>As prefab count grew, naive overlap checks became expensive. I moved validation earlier in the pipeline and reject impossible candidates as soon as doorway constraints fail.</p>
+          </details>
+          <details>
+            <summary>Natural Doorway Detection</summary>
+            <p>Some doorways connect naturally after independent placements. I detect these post-placement and convert them into valid connections to avoid blocking plausible paths.</p>
+          </details>
+          <details>
+            <summary>Multi-Floor Support</summary>
+            <p>Vertical expansion adds extra constraints: floor transitions, stair clearance, and vertical collision checks. This shifted the generator from random assembly toward constraint solving.</p>
+          </details>
+        </div>
+        <div class="eng-callout">
+          <p>This project is fundamentally a constraint solver. Randomness proposes candidates. Constraints decide the map.</p>
+        </div>
+      </section>
+
+      <section class="eng-section">
+        <h2>What I Am Most Proud Of</h2>
+        <p>
+          The generated layouts read as handcrafted despite being assembled at runtime. The framework supports large prefab sets, multiple floors, and naturally occurring room connections without hand-linking every route.
+        </p>
+      </section>
+
+      <section class="eng-section">
+        <h2>Lessons Learned</h2>
+        <ul>
+          <li>Separating progression from exploration produces more believable maps.</li>
+          <li>Procedural generation is about gameplay structure as much as randomness.</li>
+          <li>Constraint quality matters more than random seed quality.</li>
+        </ul>
+      </section>
+
+      <section class="eng-section">
+        <h2>Engineering Highlights</h2>
+        <div class="eng-link-grid">
+          <article class="eng-link-card">
+            <h4>Procedural Map Generation</h4>
+            <p>Detailed breakdown of the generation architecture used in Site 23.</p>
+            <a href="../engineering/procedural-map-generation.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Smart AI Group Pathfinding</h4>
+            <p>Group navigation approach used for dynamic pressure in generated spaces.</p>
+            <a href="../engineering/smart-ai-group-pathfinding.html">Open Engineering Page</a>
+          </article>
+        </div>
+      </section>
+    </article>
+
+    <aside class="eng-side">
+      <div class="eng-side-panel">
+        <h3>Technical Themes</h3>
+        <div class="eng-tag-list">
+          <span>Procedural Generation</span>
+          <span>Constraint Solving</span>
+          <span>Transform Math</span>
+          <span>Collision Validation</span>
+          <span>Multi-Floor Layouts</span>
+        </div>
+      </div>
+      <div class="eng-side-panel">
+        <h3>Explore Next</h3>
+        <div class="eng-links">
+          <a href="data-hunters.html">Data Hunters</a>
+          <a href="../engineering/procedural-map-generation.html">Procedural Map Generation</a>
+          <a href="../engineering/index.html">All Engineering Pages</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">(c) Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

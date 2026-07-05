@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Server-Authoritative Hit Validation - Grant Petri</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704" />
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="eng-page-hero">
+    <div class="container">
+      <div class="kicker">Engineering Case Study</div>
+      <h1>Server-Authoritative Hit Validation</h1>
+      <p class="page-summary">Combat pipeline that preserves responsive local feedback while making the server the final authority for damage and hit legality.</p>
+      <span class="eng-status-chip">Language: Lua | Runtime: Roblox | Focus: Networking and Fairness</span>
+    </div>
+  </header>
+
+  <section class="container eng-layout">
+    <article class="eng-content">
+      <section id="overview" class="eng-section">
+        <h2>Overview</h2>
+        <p>
+          This validation model separates player feel from game truth. Clients render immediate shot feedback for responsiveness, while the server independently validates each reported hit before applying damage.
+        </p>
+      </section>
+
+      <section id="problem" class="eng-section">
+        <h2>Problem</h2>
+        <p>
+          Fully client-trusted hit registration is vulnerable to manipulation and desync. Fully server-simulated shooting can feel laggy. The challenge is balancing fairness and responsiveness under real-world latency.
+        </p>
+      </section>
+
+      <section id="goals" class="eng-section">
+        <h2>Design Goals</h2>
+        <ul>
+          <li>Server decides final hit validity and damage.</li>
+          <li>Client still receives immediate audiovisual shot feedback.</li>
+          <li>Validation tolerates normal latency without rewarding impossible shots.</li>
+          <li>System remains debuggable with clear rejection reasons.</li>
+        </ul>
+      </section>
+
+      <section id="architecture" class="eng-section">
+        <h2>Architecture</h2>
+        <div class="eng-diagram" aria-label="Server-authoritative hit validation architecture">
+          <div class="eng-node">Client Fires Weapon Event</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Client Predicts Effects Locally</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Server Reconstructs Shot State</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Raycast and Rule Validation</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Apply Damage or Reject Event</div>
+        </div>
+      </section>
+
+      <section id="implementation" class="eng-section">
+        <h2>Implementation</h2>
+        <p>
+          Each shot event carries compact context: origin, direction, timestamp, and weapon identifier. On receipt, the server checks fire-rate windows, validates shooter state, reconstructs a raycast path, and only then commits damage.
+        </p>
+        <div class="eng-callout">
+          <p>Important boundary: the client can request a hit, but cannot declare a hit.</p>
+        </div>
+      </section>
+
+      <section id="challenges" class="eng-section">
+        <h2>Engineering Challenges</h2>
+        <div class="eng-notes">
+          <details open>
+            <summary>Latency and fairness</summary>
+            <p>Validation windows were tuned to avoid rejecting normal latency cases while still catching physically impossible claims.</p>
+          </details>
+          <details>
+            <summary>Rate-of-fire exploits</summary>
+            <p>Server enforces weapon cadence with timestamp checks, preventing client-side fire-speed manipulation.</p>
+          </details>
+          <details>
+            <summary>Debuggability</summary>
+            <p>Reject paths emit categorized reasons, making it possible to tune thresholds from telemetry instead of guesswork.</p>
+          </details>
+        </div>
+      </section>
+
+      <section id="code" class="eng-section">
+        <h2>Code Examples</h2>
+        <article class="eng-code-card">
+          <h3>Server Shot Validation Skeleton</h3>
+<pre class="eng-code"><code class="language-lua">local function validateShot(player, payload)
+    if not isFireRateLegal(player, payload.weaponId, payload.timestamp) then
+        return false, "fire_rate"
+    end
+
+    if not isStateLegal(player, payload) then
+        return false, "player_state"
+    end
+
+    local rayResult = serverRaycast(payload.origin, payload.direction, payload.weaponId)
+    if not rayResult.hit then
+        return false, "no_hit"
+    end
+
+    if not isTargetLegal(player, rayResult.instance) then
+        return false, "target_invalid"
+    end
+
+    return true, rayResult
+end</code></pre>
+        </article>
+
+        <article class="eng-code-card">
+          <h3>Applying Damage After Validation</h3>
+<pre class="eng-code"><code class="language-lua">local ok, result = validateShot(player, payload)
+if not ok then
+    logRejectedShot(player, result)
+    return
+end
+
+applyWeaponDamage(player, result.instance, payload.weaponId)
+replicateConfirmedHit(player, result)</code></pre>
+        </article>
+      </section>
+
+      <section id="tradeoffs" class="eng-section">
+        <h2>Tradeoffs</h2>
+        <ul>
+          <li>Strict validation improves fairness but can increase false negatives if thresholds are too tight.</li>
+          <li>Client prediction improves feel but requires reconciliation paths for rejected events.</li>
+          <li>More validation layers improve security but add computational overhead per shot.</li>
+        </ul>
+      </section>
+
+      <section id="future" class="eng-section">
+        <h2>Future Improvements</h2>
+        <ul>
+          <li>Add lag-compensated rewind for target position validation.</li>
+          <li>Build dashboards for rejection reason distribution over time.</li>
+          <li>Attach confidence scoring to suspicious shot clusters.</li>
+        </ul>
+      </section>
+
+      <section id="proud" class="eng-section">
+        <h2>Why I Am Proud Of It</h2>
+        <p>
+          This system let me keep gunplay responsive without giving up authority. It turned networking fairness from an afterthought into a first-class design constraint.
+        </p>
+      </section>
+
+      <section id="lessons" class="eng-section">
+        <h2>Lessons Learned</h2>
+        <ul>
+          <li>Authority boundaries should be explicit and documented from the start.</li>
+          <li>Reject telemetry is as important as accepted-hit telemetry.</li>
+          <li>Security and player feel must be designed together, not in sequence.</li>
+        </ul>
+      </section>
+
+      <section id="related-project" class="eng-section">
+        <h2>Related Project</h2>
+        <div class="eng-link-grid">
+          <article class="eng-link-card">
+            <h4>Data Hunters</h4>
+            <p>Primary game that uses this validation model for multiplayer combat integrity.</p>
+            <a href="../projects/data-hunters.html">Open Project Page</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="related-engineering" class="eng-section">
+        <h2>Related Engineering</h2>
+        <div class="eng-link-grid">
+          <article class="eng-link-card">
+            <h4>Projectile Simulation</h4>
+            <p>Ballistics subsystem feeding shot trajectories into validation.</p>
+            <a href="projectile-simulation.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Modular Weapon Framework</h4>
+            <p>Weapon metadata used during cadence and damage checks.</p>
+            <a href="modular-weapon-framework.html">Open Engineering Page</a>
+          </article>
+        </div>
+      </section>
+    </article>
+
+    <aside class="eng-side">
+      <div class="eng-side-panel">
+        <h3>On This Page</h3>
+        <div class="eng-links">
+          <a href="#overview">Overview</a>
+          <a href="#problem">Problem</a>
+          <a href="#goals">Design Goals</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#implementation">Implementation</a>
+          <a href="#challenges">Engineering Challenges</a>
+          <a href="#code">Code Examples</a>
+          <a href="#tradeoffs">Tradeoffs</a>
+          <a href="#future">Future Improvements</a>
+          <a href="#proud">Why I Am Proud Of It</a>
+          <a href="#lessons">Lessons Learned</a>
+          <a href="#related-project">Related Project</a>
+          <a href="#related-engineering">Related Engineering</a>
+        </div>
+      </div>
+      <div class="eng-side-panel">
+        <h3>Technologies</h3>
+        <div class="eng-tag-list">
+          <span>Lua</span>
+          <span>Roblox</span>
+          <span>Client Prediction</span>
+          <span>Server Authority</span>
+          <span>Raycasting</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">(c) Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

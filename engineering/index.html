@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Engineering — Grant Petri</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="kicker">Engineering Case Studies</div>
+        <h1>Technical Systems Built For Gameplay</h1>
+        <p class="page-summary">
+          This section highlights the technical systems I have designed and implemented across my projects, with a focus on gameplay engineering, multiplayer reliability, simulation, and tools that support fast iteration.
+        </p>
+      </div>
+
+      <aside class="hero-panel">
+        <h3>What This Section Covers</h3>
+        <p>
+          These write-ups focus on problem-solving, architecture decisions, implementation tradeoffs, and lessons learned from building real gameplay systems.
+        </p>
+        <div class="hero-metrics">
+          <div class="hero-metric">
+            <strong>10</strong>
+            <span>system case studies</span>
+          </div>
+          <div class="hero-metric">
+            <strong>Gameplay</strong>
+            <span>programming focus</span>
+          </div>
+          <div class="hero-metric">
+            <strong>Netcode</strong>
+            <span>authoritative multiplayer systems</span>
+          </div>
+          <div class="hero-metric">
+            <strong>Tools</strong>
+            <span>architecture for iteration speed</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <section class="container section-stack">
+    <div class="section-intro">
+      <div class="kicker">Selected Topics</div>
+      <h2>Engineering</h2>
+      <p>
+        Rather than listing technologies in isolation, these case studies show how I approach responsive weapon feel, server trust boundaries, AI coordination, procedural generation, and scalable gameplay architecture.
+      </p>
+    </div>
+
+    <div class="engineering-grid">
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Dynamic Weapon Sway</h3>
+          <p class="card-desc">A spring-driven first-person sway model that translates camera movement and recoil into responsive viewmodel motion.</p>
+          <div class="card-tags"><span>Roblox</span><span>Springs</span><span>First-Person</span></div>
+          <a class="card-link" href="dynamic-weapon-sway.html">View case study →</a>
+        </div>
+      </article>
+
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Modular Weapon Framework</h3>
+          <p class="card-desc">A configurable weapon pipeline built to support varied guns, shared behaviors, and faster content iteration.</p>
+          <div class="card-tags"><span>Gameplay Systems</span><span>Data-Driven</span><span>Tooling</span></div>
+          <a class="card-link" href="modular-weapon-framework.html">View case study →</a>
+        </div>
+      </article>
+
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Projectile Simulation</h3>
+          <p class="card-desc">A deterministic projectile stepper with gravity, raycast collision, and penetration support for believable ballistic gameplay.</p>
+          <div class="card-tags"><span>Simulation</span><span>Ballistics</span><span>Raycasting</span></div>
+          <a class="card-link" href="projectile-simulation.html">View case study →</a>
+        </div>
+      </article>
+
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Server-Authoritative Hit Validation</h3>
+          <p class="card-desc">A hit pipeline that preserves fast client feel while keeping final damage decisions on the server.</p>
+          <div class="card-tags"><span>Networking</span><span>Security</span><span>Combat</span></div>
+          <a class="card-link" href="server-authoritative-hit-validation.html">View case study →</a>
+        </div>
+      </article>
+
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Matchmaking & Lobby System</h3>
+          <p class="card-desc">A player flow system for loadouts, queueing, session starts, and clean transitions between lobby and matches.</p>
+          <div class="card-tags"><span>Multiplayer</span><span>Session Flow</span><span>UX</span></div>
+          <a class="card-link" href="matchmaking-lobby-system.html">View case study →</a>
+        </div>
+      </article>
+
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Smart AI Group Pathfinding</h3>
+          <p class="card-desc">A group-aware navigation approach that reduces crowding, keeps enemies readable, and improves encounter pressure.</p>
+          <div class="card-tags"><span>AI</span><span>Pathfinding</span><span>Encounters</span></div>
+          <a class="card-link" href="smart-ai-group-pathfinding.html">View case study →</a>
+        </div>
+      </article>
+
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Sandbox Placement System</h3>
+          <p class="card-desc">A placement workflow that snaps, validates, and previews world objects for player-built sandbox interactions.</p>
+          <div class="card-tags"><span>Building Tools</span><span>Validation</span><span>UX</span></div>
+          <a class="card-link" href="sandbox-placement-system.html">View case study →</a>
+        </div>
+      </article>
+
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Procedural Map Generation</h3>
+          <p class="card-desc">A seeded generation pipeline that assembles replayable spaces while preserving pacing and encounter structure.</p>
+          <div class="card-tags"><span>Procedural Gen</span><span>Level Design</span><span>Replayability</span></div>
+          <a class="card-link" href="procedural-map-generation.html">View case study →</a>
+        </div>
+      </article>
+
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Functional Gameplay Architecture</h3>
+          <p class="card-desc">A modular architecture style that keeps gameplay logic composable, testable, and easier to extend under pressure.</p>
+          <div class="card-tags"><span>Architecture</span><span>Reusable Systems</span><span>Maintainability</span></div>
+          <a class="card-link" href="functional-gameplay-architecture.html">View case study →</a>
+        </div>
+      </article>
+
+      <article class="card engineering-card">
+        <div class="card-body">
+          <h3 class="card-title">Persistent Player Data</h3>
+          <p class="card-desc">A persistence layer for progression, inventory, and recovery that protects player data across sessions and failures.</p>
+          <div class="card-tags"><span>Persistence</span><span>Progression</span><span>Reliability</span></div>
+          <a class="card-link" href="persistent-player-data.html">View case study →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

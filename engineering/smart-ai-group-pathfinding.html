@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart AI Group Pathfinding - Grant Petri</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704" />
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="eng-page-hero">
+    <div class="container">
+      <div class="kicker">Engineering Case Study</div>
+      <h1>Smart AI Group Pathfinding</h1>
+      <p class="page-summary">Group-aware pursuit system that combines navigation paths with tactical weighting so AI enemies pressure players as coordinated units rather than queueing bots.</p>
+      <span class="eng-status-chip">Language: Lua | Runtime: Roblox | Focus: Navigation and Group Behaviors</span>
+    </div>
+  </header>
+
+  <section class="container eng-layout">
+    <article class="eng-content">
+      <section id="overview" class="eng-section">
+        <h2>Overview</h2>
+        <p>
+          The system blends baseline pathfinding with role selection and spacing logic. Instead of every AI choosing the shortest route to the exact player position, enemies evaluate candidate approach vectors and choose complementary positions.
+        </p>
+      </section>
+
+      <section id="problem" class="eng-section">
+        <h2>Problem</h2>
+        <p>
+          Naive pathfinding created predictable clumping and doorway traffic jams, especially in procedural maps. This reduced threat quality and made combat feel like a single-file queue rather than coordinated pressure.
+        </p>
+      </section>
+
+      <section id="goals" class="eng-section">
+        <h2>Design Goals</h2>
+        <ul>
+          <li>Distribute enemies around the player instead of stacking at one point.</li>
+          <li>Prevent self-blocking in narrow spaces and dynamic geometry.</li>
+          <li>Retain deterministic fallback behavior when role assignment fails.</li>
+          <li>Keep runtime cost bounded for multiplayer sessions.</li>
+        </ul>
+      </section>
+
+      <section id="architecture" class="eng-section">
+        <h2>Architecture</h2>
+        <div class="eng-diagram" aria-label="Smart AI group pathfinding architecture">
+          <div class="eng-node">Perception Update: Player + World State</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Candidate Slot Generation Around Target</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Score Slots: Distance, Risk, Congestion</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Assign Group Roles and Destinations</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Path Compute + Local Avoidance</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Re-evaluate On Timer or Disturbance</div>
+        </div>
+      </section>
+
+      <section id="implementation" class="eng-section">
+        <h2>Implementation</h2>
+        <p>
+          Every AI computes a set of candidate target offsets around the player. Offsets are scored by travel cost, angle diversity, and local crowding. A lightweight assignment pass picks destinations that maximize spread. Agents then path toward assigned slots and locally avoid teammates.
+        </p>
+        <div class="eng-callout">
+          <p>Key behavior shift: move from "chase the player position" to "occupy pressure slots around the player."</p>
+        </div>
+      </section>
+
+      <section id="challenges" class="eng-section">
+        <h2>Engineering Challenges</h2>
+        <div class="eng-notes">
+          <details open>
+            <summary>Dynamic maps and blocked routes</summary>
+            <p>Procedural layouts can invalidate assumptions quickly. The system uses periodic reassignment and fallback slots when paths collapse.</p>
+          </details>
+          <details>
+            <summary>Group oscillation</summary>
+            <p>Without hysteresis, agents swap roles too often. I introduced score stickiness and cooldowns to stabilize assignments.</p>
+          </details>
+          <details>
+            <summary>Performance constraints</summary>
+            <p>Full recomputation each frame is too expensive. I run staged updates and only recalc expensive scores on cadence or disturbances.</p>
+          </details>
+        </div>
+      </section>
+
+      <section id="code" class="eng-section">
+        <h2>Code Examples</h2>
+        <article class="eng-code-card">
+          <h3>Slot Scoring Pass</h3>
+<pre class="eng-code"><code class="language-lua">local function scoreSlot(agent, slot, context)
+    local pathCost = estimatePathCost(agent.position, slot.position)
+    local crowdPenalty = getCrowdPenalty(slot, context.assignedSlots)
+    local angleBonus = getAngleDiversityBonus(slot, context.playerForward)
+
+    return (-pathCost * weights.path)
+         + (angleBonus * weights.angle)
+         - (crowdPenalty * weights.crowd)
+end</code></pre>
+        </article>
+
+        <article class="eng-code-card">
+          <h3>Assignment Loop</h3>
+<pre class="eng-code"><code class="language-lua">for _, agent in ipairs(groupAgents) do
+    local bestSlot, bestScore = nil, -math.huge
+
+    for _, slot in ipairs(candidateSlots) do
+        if not isReserved(slot) then
+            local score = scoreSlot(agent, slot, context)
+            if score > bestScore then
+                bestScore = score
+                bestSlot = slot
+            end
+        end
+    end
+
+    reserveSlot(bestSlot, agent)
+    setAgentDestination(agent, bestSlot.position)
+end</code></pre>
+        </article>
+      </section>
+
+      <section id="tradeoffs" class="eng-section">
+        <h2>Tradeoffs</h2>
+        <ul>
+          <li>Coordinated behaviors feel better but require more orchestration than independent chasing.</li>
+          <li>Assignment stability improves readability but can delay reaction to sudden player movement.</li>
+          <li>Frequent re-scoring improves adaptation but increases CPU load.</li>
+        </ul>
+      </section>
+
+      <section id="future" class="eng-section">
+        <h2>Future Improvements</h2>
+        <ul>
+          <li>Add behavior archetypes so different enemy classes value slots differently.</li>
+          <li>Integrate line-of-sight confidence into slot scoring.</li>
+          <li>Introduce cooperative flanking triggers tied to sound events.</li>
+        </ul>
+      </section>
+
+      <section id="proud" class="eng-section">
+        <h2>Why I Am Proud Of It</h2>
+        <p>
+          The system transformed encounter quality. Players report pressure from directionality and coordination, not just enemy count, which is exactly the design target.
+        </p>
+      </section>
+
+      <section id="lessons" class="eng-section">
+        <h2>Lessons Learned</h2>
+        <ul>
+          <li>Good AI pressure comes from spatial roles, not only pathfinding speed.</li>
+          <li>Small hysteresis rules can eliminate major behavior noise.</li>
+          <li>Procedural maps demand robust fallback logic in every AI layer.</li>
+        </ul>
+      </section>
+
+      <section id="related-project" class="eng-section">
+        <h2>Related Project</h2>
+        <div class="eng-link-grid">
+          <article class="eng-link-card">
+            <h4>Data Hunters</h4>
+            <p>Primary multiplayer project where this group pathfinding model drives PvE pressure.</p>
+            <a href="../projects/data-hunters.html">Open Project Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Your Shadow</h4>
+            <p>Behavior and navigation logic influenced stalking and pursuit dynamics in this published project.</p>
+            <a href="../projects/your-shadow.html">Open Project Page</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="related-engineering" class="eng-section">
+        <h2>Related Engineering</h2>
+        <div class="eng-link-grid">
+          <article class="eng-link-card">
+            <h4>Procedural Map Generation</h4>
+            <p>Map topology constraints that AI pathfinding must adapt to.</p>
+            <a href="procedural-map-generation.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Server-Authoritative Hit Validation</h4>
+            <p>Combat networking layer interacting with AI-driven encounters.</p>
+            <a href="server-authoritative-hit-validation.html">Open Engineering Page</a>
+          </article>
+        </div>
+      </section>
+    </article>
+
+    <aside class="eng-side">
+      <div class="eng-side-panel">
+        <h3>On This Page</h3>
+        <div class="eng-links">
+          <a href="#overview">Overview</a>
+          <a href="#problem">Problem</a>
+          <a href="#goals">Design Goals</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#implementation">Implementation</a>
+          <a href="#challenges">Engineering Challenges</a>
+          <a href="#code">Code Examples</a>
+          <a href="#tradeoffs">Tradeoffs</a>
+          <a href="#future">Future Improvements</a>
+          <a href="#proud">Why I Am Proud Of It</a>
+          <a href="#lessons">Lessons Learned</a>
+          <a href="#related-project">Related Project</a>
+          <a href="#related-engineering">Related Engineering</a>
+        </div>
+      </div>
+      <div class="eng-side-panel">
+        <h3>Technologies</h3>
+        <div class="eng-tag-list">
+          <span>Lua</span>
+          <span>Roblox</span>
+          <span>Pathfinding</span>
+          <span>Behavior Scoring</span>
+          <span>Group Coordination</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">(c) Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

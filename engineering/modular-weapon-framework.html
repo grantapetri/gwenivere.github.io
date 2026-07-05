@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Modular Weapon Framework — Engineering</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="kicker">Engineering Case Study</div>
+        <h1>Modular Weapon Framework</h1>
+        <p class="page-summary">A reusable weapon architecture that separates configuration, runtime state, animation, and firing logic so new guns can be built faster and maintained more safely.</p>
+      </div>
+      <aside class="hero-panel">
+        <h3>Core Focus</h3>
+        <div class="tag-list"><span>Data-Driven Design</span><span>Tool Abstractions</span><span>Gameplay Extensibility</span></div>
+      </aside>
+    </div>
+  </header>
+
+  <section class="container case-study-grid">
+    <div class="case-study-stack">
+      <section class="case-study-section">
+        <h2>1. Overview</h2>
+        <p>I built the modular weapon framework to avoid hard-coding every firearm as its own one-off script. The framework allows different weapons to share behavior while still supporting unique recoil, reload, chamber, animation, and ballistic characteristics.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>2. Design Goals</h2>
+        <ul>
+          <li>Speed up the process of adding new weapons.</li>
+          <li>Keep weapon-specific tuning in configuration rather than branching code.</li>
+          <li>Reduce bugs caused by duplicated logic across multiple gun types.</li>
+        </ul>
+      </section>
+      <section class="case-study-section">
+        <h2>3. Architecture</h2>
+        <p>Each weapon is represented by a configuration object plus runtime state. Shared modules handle input, firing, animation dispatch, spring setup, ammo/chamber logic, and projectile creation. This creates a stable control layer around otherwise very different gun behaviors.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>4. Implementation</h2>
+        <p>The framework maps a tool instance to config data, initializes state on equip, and routes input through a standard update path. Features like bolt cycling or reload stages are modeled as explicit states, which keeps timing logic readable and makes it easier to reason about complex reload flows.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>5. Challenges & Solutions</h2>
+        <p>The biggest challenge was making the abstraction flexible without becoming vague. I addressed that by defining clear boundaries: shared modules own process flow, while configs own numbers, ids, offsets, and feature flags. That kept content iteration fast and prevented the framework from collapsing into special-case code.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>6. Results / Lessons Learned</h2>
+        <p>The framework reduced the cost of adding or tuning weapons and made bugs easier to localize. The main lesson was that gameplay frameworks should be strict about ownership, otherwise rapid iteration eventually turns into maintenance debt.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Project</h2>
+        <div class="topic-links">
+          <a href="../projects/data-hunters.html">Data Hunters</a>
+        </div>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Engineering</h2>
+        <div class="topic-links">
+          <a href="dynamic-weapon-sway.html">Dynamic Weapon Sway</a>
+          <a href="projectile-simulation.html">Projectile Simulation</a>
+        </div>
+      </section>
+    </div>
+    <aside class="case-study-sidebar">
+      <div class="sidebar-panel">
+        <h3>Technologies</h3>
+        <div class="tag-list"><span>Lua</span><span>State Machines</span><span>Configuration Tables</span><span>Animation Hooks</span></div>
+      </div>
+      <div class="sidebar-panel">
+        <h3>Related Topics</h3>
+        <div class="topic-links">
+          <a href="dynamic-weapon-sway.html">Dynamic Weapon Sway</a>
+          <a href="projectile-simulation.html">Projectile Simulation</a>
+          <a href="functional-gameplay-architecture.html">Functional Gameplay Architecture</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Engineering Philosophy — Grant Petri</title>
+  <link rel="stylesheet" href="css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects/index.html">Projects</a></li>
+        <li><a href="engineering/index.html">Engineering</a></li>
+        <li><a href="engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero philosophy-hero">
+    <div class="container">
+      <div class="kicker">How I Think</div>
+      <h1>Engineering Philosophy</h1>
+      <p class="page-summary">
+        I approach gameplay development as systems engineering. I am less interested in one-off features and more interested in building frameworks that are maintainable, scalable, and fast to iterate on.
+      </p>
+    </div>
+  </header>
+
+  <section class="container philosophy-grid">
+    <article class="glass-card philosophy-card">
+      <h2>Building Reusable Systems</h2>
+      <p>I prioritize reusable gameplay systems over one-off implementations so features can be expanded without accumulating duplicate logic.</p>
+    </article>
+
+    <article class="glass-card philosophy-card">
+      <h2>Data-Driven Architecture</h2>
+      <p>I separate configuration data from runtime behavior. This keeps systems adaptable and lets gameplay tuning happen without rewriting core logic.</p>
+    </article>
+
+    <article class="glass-card philosophy-card">
+      <h2>Configuration Over Hardcoding</h2>
+      <p>If behavior can be expressed through parameters, I expose it through configuration. Hardcoded behavior is a last resort for stable constraints.</p>
+    </article>
+
+    <article class="glass-card philosophy-card">
+      <h2>Modular Design</h2>
+      <p>I split large gameplay controllers into focused modules. Clear module boundaries make debugging, testing, and team collaboration easier.</p>
+    </article>
+
+    <article class="glass-card philosophy-card">
+      <h2>Iteration Speed Is A Feature</h2>
+      <p>Good architecture makes iteration faster. Systems that are painful to tune slow down design quality and reduce experimentation.</p>
+    </article>
+
+    <article class="glass-card philosophy-card">
+      <h2>Engineering Solves Gameplay Problems</h2>
+      <p>I treat engineering as a gameplay tool: balancing responsiveness and authority, readability and complexity, flexibility and maintainability.</p>
+    </article>
+
+    <article class="glass-card philosophy-card">
+      <h2>Continuous Learning Through Refactoring</h2>
+      <p>I regularly refactor when systems reveal architectural friction. Refactoring is not rework; it is how strong systems evolve.</p>
+    </article>
+  </section>
+
+  <section class="container philosophy-statement-wrap">
+    <div class="philosophy-statement glass-card">
+      <h2>Personal Statement</h2>
+      <p>
+        I enjoy solving gameplay problems through engineering and building systems that are maintainable, scalable, and enjoyable to iterate on.
+      </p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© Grant Petri</div>
+  </footer>
+
+  <script src="js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

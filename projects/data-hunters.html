@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Data Hunters - Grant Petri</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="index.html">Projects</a></li>
+        <li><a href="../engineering/index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="eng-page-hero">
+    <div class="container">
+      <div class="kicker">Gameplay Engineering Showcase</div>
+      <h1>Data Hunters</h1>
+      <p class="page-summary">
+        PvPvE horror extraction shooter focused on risk-reward progression and multiplayer systems integrity. The engineering effort centers on reusable gameplay frameworks, authority boundaries, and deterministic combat behavior.
+      </p>
+      <span class="eng-status-chip">Status: In Development | Engine: Roblox Studio | Genre: PvPvE Horror Extraction Shooter</span>
+      <div class="project-hero-wrap">
+        <img class="project-hero-image" src="../images/hero/data-hunters.png" alt="Data Hunters gameplay hero image">
+      </div>
+    </div>
+  </header>
+
+  <section class="container eng-layout">
+    <article class="eng-content">
+      <section class="eng-section">
+        <h2>Gameplay Loop</h2>
+        <div class="eng-process">
+          <div class="eng-step"><h4>Spawn Into Match</h4><p>Players enter a session with loadout risk already committed.</p></div>
+          <div class="eng-step"><h4>Collect Data Cores</h4><p>Map objectives drive movement and player conflict.</p></div>
+          <div class="eng-step"><h4>Fight AI and Players</h4><p>Combat pressure comes from both PvE and PvP vectors.</p></div>
+          <div class="eng-step"><h4>Extract</h4><p>Successful extraction banks rewards and preserves acquired gear.</p></div>
+          <div class="eng-step"><h4>Progression</h4><p>Currency buys stronger kits, but death can wipe carried equipment.</p></div>
+        </div>
+      </section>
+
+      <section class="eng-section">
+        <h2>Architecture Overview</h2>
+        <div class="eng-diagram" aria-label="Data Hunters architecture overview">
+          <div class="eng-node">Lobby and Matchmaking</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Session State and Match Runtime</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Weapon and Projectile Frameworks</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Server Validation and Damage Authority</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">AI Behaviors and Group Pathing</div>
+          <div class="eng-arrow"></div>
+          <div class="eng-node">Persistent Progression and Economy</div>
+        </div>
+
+        <div class="eng-card-grid">
+          <article class="eng-card"><h3>Lobby System</h3><p>Loadout prep, queue entry, and pre-match state ownership.</p></article>
+          <article class="eng-card"><h3>Matchmaking</h3><p>Session assembly and transition from lobby to active map.</p></article>
+          <article class="eng-card"><h3>Persistent Progression</h3><p>Data model for economy and equipment risk across sessions.</p></article>
+          <article class="eng-card"><h3>Weapon Framework</h3><p>Config-driven firearm behavior with shared controller logic.</p></article>
+          <article class="eng-card"><h3>Projectile Simulation</h3><p>Travel-time ballistics and penetration-aware collision checks.</p></article>
+          <article class="eng-card"><h3>Networking</h3><p>Server-authoritative validation for combat outcomes.</p></article>
+          <article class="eng-card"><h3>AI</h3><p>Group-aware movement pressure rather than queue behavior.</p></article>
+          <article class="eng-card"><h3>State Management</h3><p>Explicit runtime states for reload, bolt cycle, and tool ownership.</p></article>
+        </div>
+      </section>
+
+      <section class="eng-section">
+        <h2>Engineering Highlights</h2>
+        <div class="eng-link-grid">
+          <article class="eng-link-card">
+            <h4>Dynamic Weapon Sway</h4>
+            <p>Procedural spring simulation replacing animation-heavy sway workflows.</p>
+            <a href="../engineering/dynamic-weapon-sway.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Projectile Simulation</h4>
+            <p>Deterministic ballistic update path with gravity and collision checks.</p>
+            <a href="../engineering/projectile-simulation.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Server Authoritative Hit Validation</h4>
+            <p>Latency-aware validation model for fair multiplayer damage resolution.</p>
+            <a href="../engineering/server-authoritative-hit-validation.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Persistent Player Data</h4>
+            <p>Progression durability and economy continuity across risky sessions.</p>
+            <a href="../engineering/persistent-player-data.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Modular Weapon Framework</h4>
+            <p>New weapons are introduced through configuration instead of controller edits.</p>
+            <a href="../engineering/modular-weapon-framework.html">Open Engineering Page</a>
+          </article>
+          <article class="eng-link-card">
+            <h4>Smart AI Group Pathfinding</h4>
+            <p>Weighted group movement that avoids queueing behavior around players.</p>
+            <a href="../engineering/smart-ai-group-pathfinding.html">Open Engineering Page</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="eng-section">
+        <h2>Engineering Tradeoffs</h2>
+        <ul>
+          <li>Client-side responsiveness is preserved for feel, while final outcomes remain server-owned.</li>
+          <li>Config-driven flexibility increases tuning speed but requires disciplined schema ownership.</li>
+          <li>AI group behavior improves combat dynamics but increases runtime vector computation cost.</li>
+        </ul>
+      </section>
+
+      <section class="eng-section">
+        <h2>Lessons Learned</h2>
+        <ul>
+          <li>Extraction shooters demand strong state integrity before feature scale.</li>
+          <li>Reusable frameworks reduce long-term content cost in multiplayer projects.</li>
+          <li>Authority boundaries must be defined early, not patched in later.</li>
+        </ul>
+      </section>
+    </article>
+
+    <aside class="eng-side">
+      <div class="eng-side-panel">
+        <h3>Project Context</h3>
+        <div class="eng-tag-list">
+          <span>PvPvE</span>
+          <span>Extraction Loop</span>
+          <span>Server Authority</span>
+          <span>Weapon Systems</span>
+          <span>Persistent Economy</span>
+        </div>
+      </div>
+      <div class="eng-side-panel">
+        <h3>Related Projects</h3>
+        <div class="eng-links">
+          <a href="site-23.html">Site 23</a>
+          <a href="your-shadow.html">Your Shadow</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">(c) Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

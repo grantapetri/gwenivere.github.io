@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Functional Gameplay Architecture — Engineering</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="kicker">Engineering Case Study</div>
+        <h1>Functional Gameplay Architecture</h1>
+        <p class="page-summary">A modular architecture approach that keeps gameplay code easier to compose, reason about, and extend as projects grow in complexity.</p>
+      </div>
+      <aside class="hero-panel">
+        <h3>Core Focus</h3>
+        <div class="tag-list"><span>Architecture</span><span>Separation of Concerns</span><span>Maintainability</span></div>
+      </aside>
+    </div>
+  </header>
+
+  <section class="container case-study-grid">
+    <div class="case-study-stack">
+      <section class="case-study-section">
+        <h2>1. Overview</h2>
+        <p>Functional Gameplay Architecture is the design mindset I use to keep gameplay systems modular. Rather than building large monolithic scripts, I prefer focused modules with clearly defined responsibilities and predictable data flow.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>2. Design Goals</h2>
+        <ul>
+          <li>Reduce coupling between unrelated gameplay features.</li>
+          <li>Make systems easier to test, swap, or extend.</li>
+          <li>Support fast iteration without constantly destabilizing old logic.</li>
+        </ul>
+      </section>
+      <section class="case-study-section">
+        <h2>3. Architecture</h2>
+        <p>The architecture is centered on small modules that transform state or orchestrate specific responsibilities. Systems communicate through explicit interfaces and data contracts rather than hidden side effects. That makes ownership easier to trace and debugging less painful.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>4. Implementation</h2>
+        <p>In practice, this means separating configuration from runtime state, separating presentation from authority, and keeping orchestration logic thin. Complex systems are built by composing smaller ones, which creates reusable pieces for future projects instead of forcing every new feature to start from scratch.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>5. Challenges & Solutions</h2>
+        <p>The risk with modular architecture is abstraction drift, where helpers become vague and ownership gets blurry. I counter that by keeping module boundaries concrete and by naming systems after responsibilities rather than after broad concepts.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>6. Results / Lessons Learned</h2>
+        <p>This approach has made larger gameplay features easier to evolve over time. The key lesson is that good architecture for gameplay is less about theoretical purity and more about preserving iteration speed under real production pressure.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Project</h2>
+        <div class="topic-links">
+          <a href="../projects/site-23.html">Site 23</a>
+          <a href="../projects/data-hunters.html">Data Hunters</a>
+        </div>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Engineering</h2>
+        <div class="topic-links">
+          <a href="modular-weapon-framework.html">Modular Weapon Framework</a>
+          <a href="matchmaking-lobby-system.html">Matchmaking &amp; Lobby System</a>
+        </div>
+      </section>
+    </div>
+    <aside class="case-study-sidebar">
+      <div class="sidebar-panel">
+        <h3>Technologies</h3>
+        <div class="tag-list"><span>Lua</span><span>Module Design</span><span>State Isolation</span><span>Reusable Systems</span></div>
+      </div>
+      <div class="sidebar-panel">
+        <h3>Related Topics</h3>
+        <div class="topic-links">
+          <a href="modular-weapon-framework.html">Modular Weapon Framework</a>
+          <a href="matchmaking-lobby-system.html">Matchmaking & Lobby System</a>
+          <a href="persistent-player-data.html">Persistent Player Data</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Procedural Map Generation — Engineering</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="kicker">Engineering Case Study</div>
+        <h1>Procedural Map Generation</h1>
+        <p class="page-summary">A seeded generation pipeline built to create replayable layouts while preserving tension curves, navigability, and encounter structure.</p>
+      </div>
+      <aside class="hero-panel">
+        <h3>Core Focus</h3>
+        <div class="tag-list"><span>Procedural Generation</span><span>Level Flow</span><span>Replayability</span></div>
+      </aside>
+    </div>
+  </header>
+
+  <section class="container case-study-grid">
+    <div class="case-study-stack">
+      <section class="case-study-section">
+        <h2>1. Overview</h2>
+        <p>Procedural Map Generation was built to give Site 23 replayable spaces without losing atmosphere or pacing. The goal was not randomness for its own sake, but controllable variation that still produces useful exploration and encounter opportunities.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>2. Design Goals</h2>
+        <ul>
+          <li>Create fresh runs through seeded layout variation.</li>
+          <li>Preserve readability and progression even when rooms are rearranged.</li>
+          <li>Support thematic and gameplay constraints during generation.</li>
+        </ul>
+      </section>
+      <section class="case-study-section">
+        <h2>3. Architecture</h2>
+        <p>The system works from modular building pieces, generation rules, and seeded randomness. Layout selection, adjacency constraints, and content placement operate in stages so the generator can reject invalid results early and preserve overall flow.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>4. Implementation</h2>
+        <p>I structured the generator as a pipeline: choose a seed, assemble valid modules, enforce connectivity, then place encounter or atmosphere elements on top. This allows level logic to evolve independently from raw room assets and makes debugging far easier than a single opaque generation pass.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>5. Challenges & Solutions</h2>
+        <p>The difficult balance was between variation and quality control. I handled that by constraining the problem with modular rules and post-generation validation rather than trying to hand-author every possible outcome. That preserved replayability without creating obviously broken layouts.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>6. Results / Lessons Learned</h2>
+        <p>The system made replayable horror spaces more feasible while still respecting pacing goals. The major lesson was that procedural generation works best when it is treated as authored possibility space, not unrestricted randomness.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Project</h2>
+        <div class="topic-links">
+          <a href="../projects/site-23.html">Site 23</a>
+          <a href="../projects/your-shadow.html">Your Shadow</a>
+        </div>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Engineering</h2>
+        <div class="topic-links">
+          <a href="smart-ai-group-pathfinding.html">Smart AI Group Pathfinding</a>
+          <a href="functional-gameplay-architecture.html">Functional Gameplay Architecture</a>
+        </div>
+      </section>
+    </div>
+    <aside class="case-study-sidebar">
+      <div class="sidebar-panel">
+        <h3>Technologies</h3>
+        <div class="tag-list"><span>Lua</span><span>Seeded Generation</span><span>Modular Tiles</span><span>Validation Passes</span></div>
+      </div>
+      <div class="sidebar-panel">
+        <h3>Related Topics</h3>
+        <div class="topic-links">
+          <a href="smart-ai-group-pathfinding.html">Smart AI Group Pathfinding</a>
+          <a href="functional-gameplay-architecture.html">Functional Gameplay Architecture</a>
+          <a href="persistent-player-data.html">Persistent Player Data</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>

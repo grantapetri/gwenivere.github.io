@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Persistent Player Data — Engineering</title>
+  <link rel="stylesheet" href="../css/style.css?v=20260704">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="../index.html">GP</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="index.html">Engineering</a></li>
+        <li><a href="../engineering-philosophy.html">Engineering Philosophy</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <div class="topbar-icons">
+        <a href="https://github.com/grantapetri" aria-label="GitHub"><img class="icon" src="../images/icons/github.svg" alt="GitHub"></a>
+        <a href="https://www.linkedin.com/in/grant-petri/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img class="icon" src="../images/icons/linkedin.svg" alt="LinkedIn"></a>
+        <a href="mailto:grant.a.petri@gmail.com" aria-label="Email"><img class="icon" src="../images/icons/mail.svg" alt="Email"></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="kicker">Engineering Case Study</div>
+        <h1>Persistent Player Data</h1>
+        <p class="page-summary">A persistence strategy for progression, inventory, and long-term player state designed to be resilient against disconnects and failed saves.</p>
+      </div>
+      <aside class="hero-panel">
+        <h3>Core Focus</h3>
+        <div class="tag-list"><span>Persistence</span><span>Progression</span><span>Reliability</span><span>Recovery</span></div>
+      </aside>
+    </div>
+  </header>
+
+  <section class="container case-study-grid">
+    <div class="case-study-stack">
+      <section class="case-study-section">
+        <h2>1. Overview</h2>
+        <p>Persistent Player Data handles the long-term state that gives multiplayer sessions continuity. It is responsible for storing progression, inventory, unlocks, and other player-owned data in a way that protects against loss and inconsistency.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>2. Design Goals</h2>
+        <ul>
+          <li>Preserve player progress safely across sessions.</li>
+          <li>Minimize data loss during disconnects or service failures.</li>
+          <li>Keep the data model flexible enough for future progression features.</li>
+        </ul>
+      </section>
+      <section class="case-study-section">
+        <h2>3. Architecture</h2>
+        <p>The system separates authoritative runtime state from persisted profile data. Save operations are treated as controlled synchronization points rather than casual side effects, which reduces the chance of corrupting progress when multiple systems update a player at once.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>4. Implementation</h2>
+        <p>Player data is loaded into a structured runtime profile, mutated through controlled gameplay systems, and committed back through save routines that can validate or sanitize data before it becomes permanent. This makes it easier to reason about progression rules and recovery behavior.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>5. Challenges & Solutions</h2>
+        <p>The biggest challenge is consistency under failure. I approach that by treating persistence as a first-class system with explicit ownership and defensive save logic rather than as an afterthought attached to individual features.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>6. Results / Lessons Learned</h2>
+        <p>The result is a more trustworthy player progression foundation. The lesson is that persistence work is invisible when it succeeds, which is exactly why it must be designed carefully from the start.</p>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Project</h2>
+        <div class="topic-links">
+          <a href="../projects/data-hunters.html">Data Hunters</a>
+        </div>
+      </section>
+      <section class="case-study-section">
+        <h2>Related Engineering</h2>
+        <div class="topic-links">
+          <a href="matchmaking-lobby-system.html">Matchmaking &amp; Lobby System</a>
+          <a href="functional-gameplay-architecture.html">Functional Gameplay Architecture</a>
+        </div>
+      </section>
+    </div>
+    <aside class="case-study-sidebar">
+      <div class="sidebar-panel">
+        <h3>Technologies</h3>
+        <div class="tag-list"><span>Lua</span><span>Data Stores</span><span>Profile Models</span><span>Fault Tolerance</span></div>
+      </div>
+      <div class="sidebar-panel">
+        <h3>Related Topics</h3>
+        <div class="topic-links">
+          <a href="matchmaking-lobby-system.html">Matchmaking & Lobby System</a>
+          <a href="server-authoritative-hit-validation.html">Server-Authoritative Hit Validation</a>
+          <a href="functional-gameplay-architecture.html">Functional Gameplay Architecture</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© Grant Petri</div>
+  </footer>
+
+  <script src="../js/portfolio-enhancements.js" defer></script>
+
+</body>
+</html>
